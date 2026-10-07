@@ -9,7 +9,7 @@ COPY rootfs/ /
 RUN export DEBIAN_FRONTEND=noninteractive && \
     chmod 755 /usr/bin/fileserver /usr/bin/xseld && \
     apt-get update && \
-    apt-get install -y --no-install-recommends p11-kit libavcodec60 libdbus-glib-1-2 && \
+    apt-get install -y --no-install-recommends p11-kit ffmpeg libdbus-glib-1-2 && \
     apt-get clean && rm -rf /tmp/* && rm -Rf /var/lib/apt/lists/*
 
 RUN --mount=type=bind,source=browser_data,target=/data \

@@ -1,12 +1,12 @@
 docker buildx build --platform linux/amd64 -t base/ubuntu-noble ./base/ubuntu-noble
 
 docker run --rm --platform linux/amd64 -v `(pwd)`:/work \
-	ubuntu:24.04 \
+	ubuntu:26.04 \
 	/bin/bash -c 'cd work && apt-get update && \
-	 apt-get install -y wget gpg && \
+	 apt-get install -y wget gpg curl jq && \
 	 mkdir -m 700 ~/.gnupg && \
 	 echo LATEST_FIREFOX_VERSION=$(./scripts/download-firefox.sh) >> .env && \
-	 echo LATEST_CHROME_VERSION=$(./scripts/download-chrome.sh) >> .env'
+	 echo LATEST_CHROME_VERSION=$(./scripts/get-chrome-version.sh) >> .env'
 
 docker run -d --name registry -p 5000:5000 registry:latest
 
@@ -50,7 +50,7 @@ if [ ! -z "${LATEST_PLAYWRIGHT_VERSION}" ]; then
     playwright_version=$LATEST_PLAYWRIGHT_VERSION
 fi
 
-for browser in firefox chrome webkit
+for browser in firefox chromium webkit
 do
     docker buildx build -t selebrow/playwright-${browser} --file ./playwright/${browser}.Dockerfile \
         ./playwright/ \

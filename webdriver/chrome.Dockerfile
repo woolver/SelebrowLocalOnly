@@ -10,7 +10,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     chmod 755 /usr/bin/fileserver /usr/bin/xseld && \
     apt-get update && \
     apt-get install -y --no-install-recommends p11-kit libnss3 libxss1 libasound2t64 libatk-bridge2.0-0 libgbm1 \
-            xdg-utils wget libu2f-udev libvulkan1 unzip && \
+            xdg-utils wget libvulkan1 unzip && \
     # make chrome use system-wide trust store
     ln -sf /usr/lib/x86_64-linux-gnu/pkcs11/p11-kit-trust.so /usr/lib/x86_64-linux-gnu/libnssckbi.so && \
     apt-get clean && rm -rf /tmp/* && rm -Rf /var/lib/apt/lists/*
